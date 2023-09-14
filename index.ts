@@ -18,10 +18,10 @@ async function initTesseractWorker() {
     logger: progress => console.log(progress)
   });
 
-  await worker.loadLanguage('jpn+osd+eng');
-  await worker.initialize('jpn+osd+eng');
+  await worker.loadLanguage('jpn_vert+eng');
+  await worker.initialize('jpn_vert+eng');
   await worker.setParameters({
-    tessedit_pageseg_mode: PSM.AUTO_OSD
+    tessedit_pageseg_mode: PSM.AUTO,
   })
   return worker;
 }

@@ -34,6 +34,23 @@ dropZone.addEventListener('drop', function(e) {
     previewImage(file);
 });
 
+function translateText(textToTranslate) {
+    fetch('/translate', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ text: textToTranslate })
+    })
+    .then(response => response.text())
+    .then(data => {
+        document.getElementById('extractedTextPreview').textContent = data;
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        document.getElementById('extractedTextPreview').textContent = 'Error translating the text.';
+    });
+}
 
 function uploadFile(file) {
     const formData = new FormData();
@@ -45,8 +62,10 @@ function uploadFile(file) {
     })
     .then(response => response.text())
     .then(text => {
-        document.getElementById('extracted_text').value = text;
+        document.getElementById('extracted_test').value = text;
         document.getElementById('extractedTextPreview').textContent = text;
+        // Automatically trigger the translation after OCR
+        translateText(text);
     })
     .catch(error => {
         console.error('Error:', error);
@@ -56,27 +75,6 @@ function uploadFile(file) {
 
 document.getElementById('translateForm').addEventListener('submit', function(e) {
     e.preventDefault();  // Prevent the default form submit behavior
-    
-    const textToTranslate = document.getElementById('extracted_text').value;
-
-    fetch('/translate', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ text: textToTranslate })
-    })
-    .then(response => response.text())
-    .then(data => {
-        console.log(data);
-        if (data) {
-            document.getElementById('extractedTextPreview').textContent = data;
-        } else {
-            throw new Error("Translation not received");
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        document.getElementById('extractedTextPreview').textContent = 'Error translating the text.';
-    });
+    const textToTranslate = document.getElementById('extracted_test').value;
+    translateText(textToTranslate);  // Re-translate the corrected text
 });

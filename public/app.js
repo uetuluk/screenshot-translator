@@ -45,7 +45,7 @@ function uploadFile(file) {
     })
     .then(response => response.text())
     .then(text => {
-        document.getElementById('extracted_test').value = text;
+        document.getElementById('extracted_text').value = text;
         document.getElementById('extractedTextPreview').textContent = text;
     })
     .catch(error => {
@@ -57,7 +57,7 @@ function uploadFile(file) {
 document.getElementById('translateForm').addEventListener('submit', function(e) {
     e.preventDefault();  // Prevent the default form submit behavior
     
-    const textToTranslate = document.getElementById('extracted_test').value;
+    const textToTranslate = document.getElementById('extracted_text').value;
 
     fetch('/translate', {
         method: 'POST',

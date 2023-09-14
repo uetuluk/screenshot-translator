@@ -15,7 +15,16 @@ document.getElementById('screenshot').addEventListener('change', function() {
     previewImage(this.files[0]);
 });
 
-const dropZone = document.getElementById('dropZone');
+document.addEventListener('dragover', function(e) {
+    e.preventDefault();
+});
+
+document.addEventListener('drop', function(e) {
+    e.preventDefault();
+});
+
+const dropZone = document.body;
+
 dropZone.addEventListener('dragover', function(e) {
     e.preventDefault();
     this.style.backgroundColor = '#eaeaea';  // change background color to give visual feedback
@@ -65,7 +74,7 @@ function uploadFile(file) {
         document.getElementById('extracted_test').value = text;
         document.getElementById('extractedTextPreview').textContent = text;
         // Automatically trigger the translation after OCR
-        translateText(text);
+        // translateText(text);
     })
     .catch(error => {
         console.error('Error:', error);

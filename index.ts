@@ -1,7 +1,7 @@
 import express, { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import multer from 'multer';
-import { createWorker } from 'tesseract.js';
+import { createWorker, OEM } from 'tesseract.js';
 import Anthropic from '@anthropic-ai/sdk';
 import bodyParser from 'body-parser';
 
@@ -18,8 +18,8 @@ async function initTesseractWorker() {
     logger: progress => console.log(progress)
   });
 
-  await worker.loadLanguage('jpn');
-  await worker.initialize('jpn');
+  await worker.loadLanguage('jpn+eng');
+  await worker.initialize('jpn+eng', OEM.LSTM_ONLY);
   return worker;
 }
 

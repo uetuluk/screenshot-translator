@@ -56,7 +56,7 @@ app.post('/translate', async (req, res) => {
   await anthropic.completions.create({
     model: 'claude-2',
     max_tokens_to_sample: 1000,
-    prompt: `${Anthropic.HUMAN_PROMPT} Translate the given text to English:\n${req.body.text}${Anthropic.AI_PROMPT}`,
+    prompt: `${Anthropic.HUMAN_PROMPT} Translate the given text to English and also transliterate:\n${req.body.text}${Anthropic.AI_PROMPT}`,
   }).catch((error) => {
     console.log(error);
     res.status(500).send(error);
